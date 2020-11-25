@@ -24,6 +24,7 @@ $user->password = $data->password;
 $user->firstName = $data->firstName;
 $user->middleName = $data->middleName;
 $user->lastName = $data->lastName;
+$user->admin = $data->admin;
 
 //Create user
 if($user->create_user()){

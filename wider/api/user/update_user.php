@@ -25,6 +25,7 @@ $user->firstName = $data->firstName;
 $user->middleName = $data->middleName;
 $user->lastName = $data->lastName;
 $user->userID = $data->userID;
+$user->admin = $data->admin;
 
 //Update user
 if($user->update_user()){

@@ -12,6 +12,7 @@ Class User{
     public $middleName;
     public $lastName;
     public $userID;
+    public $admin;
 
     //Constructor with db
     public function __construct($db){
@@ -50,6 +51,14 @@ Class User{
         $this->firstName = $row['firstName'];
         $this->middleName = $row['middleName'];
         $this->lastName = $row['lastName'];
+        if($row['admin']==0)
+        {
+            $this->admin = "Nej";  
+        }else
+        {
+            $this->admin = "Ja";
+        }
+        //$this->admin = $row['admin'];
     }
 
     //Create user
@@ -61,7 +70,8 @@ Class User{
             password = :password,
             firstName = :firstName,
             middleName = :middleName,
-            lastName = :lastName';
+            lastName = :lastName,
+            admin = :admin';
 
             //Preparing statement
             $stmt = $this->conn->prepare($query);
@@ -72,6 +82,8 @@ Class User{
             $this->firstName =htmlspecialchars(strip_tags($this->firstName));
             $this->middleName =htmlspecialchars(strip_tags($this->middleName));
             $this->lastName =htmlspecialchars(strip_tags($this->lastName));
+            $this->admin =htmlspecialchars(strip_tags($this->admin));
+
 
             //Bind data
             $stmt->bindParam(':username', $this->username);
@@ -79,6 +91,7 @@ Class User{
             $stmt->bindParam(':firstName', $this->firstName);
             $stmt->bindParam(':middleName', $this->middleName);
             $stmt->bindParam(':lastName', $this->lastName);
+            $stmt->bindParam(':admin', $this->admin);
 
             //Executing query
             if($stmt->execute()){
@@ -99,7 +112,8 @@ Class User{
                 password = :password,
                 firstName = :firstName,
                 middleName = :middleName,
-                lastName = :lastName
+                lastName = :lastName,
+                admin = :admin
             WHERE
                 userID = :userID';
     
@@ -113,6 +127,8 @@ Class User{
                 $this->middleName =htmlspecialchars(strip_tags($this->middleName));
                 $this->lastName =htmlspecialchars(strip_tags($this->lastName));
                 $this->userID =htmlspecialchars(strip_tags($this->userID));
+                $this->admin =htmlspecialchars(strip_tags($this->admin));
+
                 //Bind data
                 $stmt->bindParam(':username', $this->username);
                 $stmt->bindParam(':password', $this->password);
@@ -120,6 +136,7 @@ Class User{
                 $stmt->bindParam(':middleName', $this->middleName);
                 $stmt->bindParam(':lastName', $this->lastName);
                 $stmt->bindParam(':userID', $this->userID);
+                $stmt->bindParam(':admin', $this->admin);
                 //Executing query
                 if($stmt->execute()){
                     return true;
