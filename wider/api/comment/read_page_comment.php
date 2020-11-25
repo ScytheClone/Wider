@@ -15,8 +15,13 @@ $comment = new Comment($db);
 $comment->pageID = isset($_GET['pageID']) ? $_GET['pageID'] : die();
 $result = $comment->read_page_comment();
 
-echo json_encode($result);
-//Check if any comment
+if(!empty($result)){
+    echo json_encode($result);
+}else{
+    echo json_encode(
+        array('message' => 'No Comments Found')
+    );
+}
 
 
 
