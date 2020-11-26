@@ -17,7 +17,7 @@ $event = new Event($db);
 $event->eventID = isset($_GET['eventID']) ? $_GET['eventID'] : die();
 
 //Get event
-$event->read_single();
+$event->read_single_event();
 
 //Create array
 $event_arr = array(
