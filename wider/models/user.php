@@ -72,7 +72,7 @@ Class User{
             $this->firstName =htmlspecialchars(strip_tags($this->firstName));
             $this->middleName =htmlspecialchars(strip_tags($this->middleName));
             $this->lastName =htmlspecialchars(strip_tags($this->lastName));
-
+$this->password=password_hash($this->password, PASSWORD_DEFAULT);
             //Bind data
             $stmt->bindParam(':username', $this->username);
             $stmt->bindParam(':password', $this->password);
@@ -128,6 +128,39 @@ Class User{
                 //Print error
                 printf("Error: %s.\n", $stmt->error);
                 return false;
+        }
+        public function authenticateUser()
+        {
+            $array=["admin"=>FALSE, "user"=>FALSE, "notFound"=>FALSE];
+            $query=$this->conn->prepare("select username, password, admin from user where username=?");
+$query->execute([$this->username]);
+if($query->rowCount()>0)
+{
+$row=$query->fetch();
+if(password_verify($this->password, $row[1]))
+{
+if($row[2]==1)
+{
+    $array['admin']=TRUE;
+    return $array;
+}
+else
+{
+    $array["user"]=TRUE;
+return $array;
+}
+}
+else 
+{
+    $array['notFound']=TRUE;
+return $array;
+}
+}
+else
+{
+    $array["notFound"]=TRUE;
+return ;
+}
         }
     }
 
