@@ -27,6 +27,18 @@ Class Comment{
 
         return $stmt;
     }
+    
+    public function read_page_comment(){
+            //Create query
+            $query = 'SELECT * FROM comment WHERE pageID =' . $this->pageID . ' and cPublish = 1';
+            //Preparing statement
+            $stmt = $this->conn->prepare($query);
+            //Executing query
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            return $rows;
+    }
 
     
 //Create comment
