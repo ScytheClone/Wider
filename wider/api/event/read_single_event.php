@@ -30,7 +30,7 @@ $event_arr = array(
     'inviteID' => $event->inviteID
 );
 
-//Make JSON
+//Make JSON 
 print_r(json_encode($event_arr));
 
 ?>
