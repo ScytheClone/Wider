@@ -12,6 +12,7 @@ Class User{
     public $middleName;
     public $lastName;
     public $userID;
+public $admin;
 
     //Constructor with db
     public function __construct($db){
@@ -50,6 +51,7 @@ Class User{
         $this->firstName = $row['firstName'];
         $this->middleName = $row['middleName'];
         $this->lastName = $row['lastName'];
+        $this->admin=$row["admin"];
     }
 
     //Create user
@@ -61,7 +63,8 @@ Class User{
             password = :password,
             firstName = :firstName,
             middleName = :middleName,
-            lastName = :lastName';
+            lastName = :lastName',
+            admin= :admin;
 
             //Preparing statement
             $stmt = $this->conn->prepare($query);
@@ -72,6 +75,8 @@ Class User{
             $this->firstName =htmlspecialchars(strip_tags($this->firstName));
             $this->middleName =htmlspecialchars(strip_tags($this->middleName));
             $this->lastName =htmlspecialchars(strip_tags($this->lastName));
+            $this->admin =htmlspecialchars(strip_tags($this->admin));
+
 $this->password=password_hash($this->password, PASSWORD_DEFAULT);
             //Bind data
             $stmt->bindParam(':username', $this->username);
@@ -79,6 +84,8 @@ $this->password=password_hash($this->password, PASSWORD_DEFAULT);
             $stmt->bindParam(':firstName', $this->firstName);
             $stmt->bindParam(':middleName', $this->middleName);
             $stmt->bindParam(':lastName', $this->lastName);
+            $stmt->bindParam(':admin', $this->admin);
+
 
             //Executing query
             if($stmt->execute()){
@@ -99,7 +106,8 @@ $this->password=password_hash($this->password, PASSWORD_DEFAULT);
                 password = :password,
                 firstName = :firstName,
                 middleName = :middleName,
-                lastName = :lastName
+                lastName = :lastName,
+                admin= :admin
             WHERE
                 userID = :userID';
     
@@ -112,6 +120,8 @@ $this->password=password_hash($this->password, PASSWORD_DEFAULT);
                 $this->firstName =htmlspecialchars(strip_tags($this->firstName));
                 $this->middleName =htmlspecialchars(strip_tags($this->middleName));
                 $this->lastName =htmlspecialchars(strip_tags($this->lastName));
+                $this->admin =htmlspecialchars(strip_tags($this->admin));
+
                 $this->userID =htmlspecialchars(strip_tags($this->userID));
                 //Bind data
                 $stmt->bindParam(':username', $this->username);
@@ -120,6 +130,8 @@ $this->password=password_hash($this->password, PASSWORD_DEFAULT);
                 $stmt->bindParam(':middleName', $this->middleName);
                 $stmt->bindParam(':lastName', $this->lastName);
                 $stmt->bindParam(':userID', $this->userID);
+                $stmt->bindParam(':admin', $this->admin);
+                
                 //Executing query
                 if($stmt->execute()){
                     return true;
