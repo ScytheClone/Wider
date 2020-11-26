@@ -11,17 +11,15 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 $user->username=$data->username;
 $user->password=$data->password;
-//$user->username="gustav";
-//$user->password="123";
  $array=$user->authenticateUser();
 if($array["user"])
 {
-    echo json_encode(["message"=>": user authenticated"]);
+    echo json_encode(["message"=>" user authenticated"]);
     
 }
 if($array["notFound"])
-echo json_encode(["message"=>":  the user is not  authenticated"]);
+echo json_encode(["message"=>" the user is not  authenticated"]);
 if($array["admin"])
-echo json_encode(["message"=>": admin authenticated"]);
+echo json_encode(["message"=>"admin authenticated"]);
 
 ?>
