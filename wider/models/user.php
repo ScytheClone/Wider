@@ -198,41 +198,4 @@ return ;
     
     }
 
-    class Auth{
-    //DB Stuff
-    private $conn;
-    private $table = 'user';
-
-    public $username;
-    public $password;
-    public $firstName;
-    public $middleName;
-    public $lastName;
-    public $userID;
-    
-        public function __construct($db) {
-            $this->conn = $db;
-        }
-    
-        public function auth($user){
-
-            $sql = 'SELECT * FROM user';
-
-            $stmt = $this->conn->prepare($sql);
-            
-            $stmt->execute();
-    
-            $rowCount = $stmt->rowCount();
-    
-            if($rowCount > 0){
-                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    if($user == $row){
-                        return "true";
-                    }
-                }
-                return "false";
-            }
-        }
-    }    
-
 ?>
