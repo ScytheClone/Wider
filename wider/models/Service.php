@@ -73,13 +73,13 @@ Class Service{
     }
     
     //Get Single service
-    public function search_service(){
-        $query = 'SELECT * FROM service, post, spage WHERE service.serviceTitle="?" AND post.serviceID = spage.serviceID AND service.publish = 1';
+    public function read_single_service(){
+        $query = 'SELECT * FROM service WHERE serviceID= ? and publish = 1';
         //Preparing statement
         $stmt = $this->conn->prepare($query);
 
         //Binding serviceID
-        $stmt->bindParam(1, $this->serviceTitle);
+        $stmt->bindParam(1, $this->serviceID);
 
         //Executing query
         $stmt->execute();
@@ -92,14 +92,6 @@ Class Service{
         $this->serviceID = $row['serviceID'];
         $this->serviceType = $row['serviceType'];
         $this->publish = $row['publish'];
-        $this->postID = $row['postID'];
-        $this->pText = $row['pText'];
-        $this->postDate = $row['postDate'];
-        $this->imageURL = $row['imageURL'];
-        $this->postTitle = $row['postTitle'];
-        $this->pageID = $row['pageID'];
-        $this->username = $row['username'];
-        $this->serviceDate = $row['serviceDate'];
 
     }
 

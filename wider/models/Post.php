@@ -57,6 +57,23 @@ Class Post{
         $this->serviceType = $row['serviceType'];
         $this->pageID = $row['pageID'];
     }
+
+    public function read_page_post(){
+                    //Create query
+                    $query = 'SELECT * FROM '. $this->table.' WHERE pageID = :pageID';
+                    //Preparing statement
+                    $stmt = $this->conn->prepare($query);
+                        //Clean data
+                        $this->pageID =htmlspecialchars(strip_tags($this->pageID));
+            
+                        //Bind data
+                        $stmt->bindParam(':pageID', $this->pageID);
+                    //Executing query
+                    $stmt->execute();
+            
+                    return $stmt;
+    }
+
     
     //Create post
     public function create_post(){
