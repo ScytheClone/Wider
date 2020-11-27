@@ -42,7 +42,7 @@ if($num > 0){
     echo json_encode($page_arr);
     /* how to get all page ID
     for($i=0;$i<$num;$i++){
-    echo json_encode($page_arr['data'][$i]['pageID']);
+    echo json_encode($page_arr['pages'][$i]['pageID']);
     }*/
 
 }else{
