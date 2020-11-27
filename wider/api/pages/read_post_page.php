@@ -13,8 +13,8 @@ $db = $database->connect();
 //Instantiate comment object
 $post = new post($db);
 
-$data = json_decode(file_get_contents("php://input"));
-$post->pageID = $data->pageID;
+//Get serviceID from URL
+$post->pageID = isset($_GET['pageID']) ? $_GET['pageID'] : die();
 $result = $post->read_page_post();
 
 //Get row count
