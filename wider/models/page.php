@@ -40,7 +40,7 @@ Class page{
             }
         }
 
-        public function read_page()
+        public function read_page_service()
         {
             //Create query
             $query = 'SELECT * FROM '. $this->table.' WHERE serviceID = :serviceID';

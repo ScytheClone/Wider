@@ -13,9 +13,10 @@ $db = $database->connect();
 //Instantiate comment object
 $page = new page($db);
 
-$data = json_decode(file_get_contents("php://input"));
-$page->serviceID = $data->serviceID;
-$result = $page->read_page();
+//Get serviceID from URL
+$page->serviceID = isset($_GET['serviceID']) ? $_GET['serviceID'] : die();
+
+$result = $page->read_page_service();
 
 //Get row count
 $num = $result->rowCount();
