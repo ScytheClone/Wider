@@ -14,23 +14,18 @@ $db = $database->connect();
 $service = new Service($db);
 
 //Get serviceID from URL
-$service->serviceTitle = isset($_GET['serviceTitle']) ? $_GET['serviceTitle'] : die();
+$service->serviceID = isset($_GET['serviceID']) ? $_GET['serviceID'] : die();
 
 //Get post
-$service->search_service();
+$service->read_single_service();
 
 //Create array
 $service_arr = array(
     'serviceID' => $service->serviceID,
     'serviceTitle' => $service->serviceTitle,
-    'postID' => $service->postID,
-    'pText' => $service->pText,
-    'imageURL' => $service->imageURL,
-    'postTitle' => $service->postTitle,
-    'pageID' => $service->pageID,
-    'username' => $service->username,
+    'serviceDate' => $service->serviceDate,
+    'serviceType' => $service->serviceType,
     'publish' => $service->publish,
-    'serviceType' => $service->serviceType
 );
 
 //Make JSON
