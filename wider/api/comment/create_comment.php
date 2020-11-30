@@ -20,7 +20,6 @@ $data = json_decode(file_get_contents("php://input"));
 
 
 $comment->cText = $data->cText;
-$comment->cDate = $data->cDate;
 $comment->pageID = $data->pageID;
 $comment->cPublish = $data->cPublish;
 
