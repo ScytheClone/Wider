@@ -16,7 +16,6 @@ Class Post{
     public $username;
     public $serviceTitle;
     public $serviceDate;
-    public $serviceID;
     public $serviceType;
 
     //Constructor with db
@@ -57,6 +56,23 @@ Class Post{
         $this->serviceType = $row['serviceType'];
         $this->pageID = $row['pageID'];
     }
+
+    public function read_page_post(){
+                    //Create query
+                    $query = 'SELECT * FROM '. $this->table.' WHERE pageID = :pageID';
+                    //Preparing statement
+                    $stmt = $this->conn->prepare($query);
+                        //Clean data
+                        $this->pageID =htmlspecialchars(strip_tags($this->pageID));
+            
+                        //Bind data
+                        $stmt->bindParam(':pageID', $this->pageID);
+                    //Executing query
+                    $stmt->execute();
+            
+                    return $stmt;
+    }
+
     
     //Create post
     public function create_post(){
@@ -68,9 +84,7 @@ Class Post{
             postDate = CURDATE(),
             username = :username,
             pageID = :pageID,
-            imageURL = :imageURL,
-            serviceID = :serviceID';
-
+            imageURL = :imageURL';
             //Preparing statement
             $stmt = $this->conn->prepare($query);
 
@@ -80,7 +94,6 @@ Class Post{
             $this->username =htmlspecialchars(strip_tags($this->username));
             $this->pageID =htmlspecialchars(strip_tags($this->pageID));
             $this->imageURL =htmlspecialchars(strip_tags($this->imageURL));
-            $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
 
             //Bind data
             $stmt->bindParam(':postTitle', $this->postTitle);
@@ -88,7 +101,6 @@ Class Post{
             $stmt->bindParam(':username', $this->username);
             $stmt->bindParam(':pageID', $this->pageID);
             $stmt->bindParam(':imageURL', $this->imageURL);
-            $stmt->bindParam(':serviceID', $this->serviceID);
 
             //Executing query
             if($stmt->execute()){
@@ -178,7 +190,6 @@ Class Post_activate{
     public $username;
     public $serviceTitle;
     public $serviceDate;
-    public $serviceID;
     public $serviceType;
 
     //Constructor with db
@@ -251,7 +262,6 @@ Class Post_history{
     public $imageURL;
     public $postTitle;
     public $pageID;
-    public $serviceID;
     public $username;
     public $serviceType;
 

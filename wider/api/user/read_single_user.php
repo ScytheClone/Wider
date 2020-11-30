@@ -24,6 +24,7 @@ $user_arr = array(
     'userID' => $user->userID,
     'username' => $user->username,
     'password' => $user->password,
+    'admin' => $user->admin
 );
 
 //Make JSON
