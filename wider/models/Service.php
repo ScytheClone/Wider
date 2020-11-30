@@ -63,7 +63,7 @@ Class Service{
 
     public function read_service(){
         //Create query
-        $query = 'SELECT * FROM post, service WHERE post.serviceID = service.serviceID AND service.publish = 1';
+        $query = 'SELECT * FROM post, service';
         //Preparing statement
         $stmt = $this->conn->prepare($query);
         //Executing query
@@ -73,8 +73,13 @@ Class Service{
     }
     
     //Get Single service
+<<<<<<< HEAD
+    public function search_service(){
+        $query = 'SELECT * FROM service, spage WHERE service.serviceID= ? AND service.serviceID = spage.serviceID';
+=======
     public function read_single_service(){
         $query = 'SELECT * FROM service WHERE serviceID= ? and publish = 1';
+>>>>>>> main
         //Preparing statement
         $stmt = $this->conn->prepare($query);
 
@@ -83,6 +88,7 @@ Class Service{
 
         //Executing query
         $stmt->execute();
+        
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -92,6 +98,11 @@ Class Service{
         $this->serviceID = $row['serviceID'];
         $this->serviceType = $row['serviceType'];
         $this->publish = $row['publish'];
+<<<<<<< HEAD
+        $this->pageID = $row['pageID'];
+        $this->serviceDate = $row['serviceDate'];
+=======
+>>>>>>> main
 
     }
 

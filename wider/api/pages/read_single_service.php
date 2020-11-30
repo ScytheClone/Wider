@@ -1,4 +1,4 @@
-<?php
+,<?php
 //Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -23,12 +23,17 @@ $service->read_single_service();
 $service_arr = array(
     'serviceID' => $service->serviceID,
     'serviceTitle' => $service->serviceTitle,
+<<<<<<< HEAD:wider/api/pages/search_single_service.php
+    'pageID' => $service->pageID,
+=======
     'serviceDate' => $service->serviceDate,
     'serviceType' => $service->serviceType,
+>>>>>>> main:wider/api/pages/read_single_service.php
     'publish' => $service->publish,
 );
 
 //Make JSON
-print_r(json_encode($service_arr));
+var_dump($service_arr);
+//print_r(json_encode($service_arr));
 
 ?>
