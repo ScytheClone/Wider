@@ -23,7 +23,6 @@ $post->pText = $data->pText;
 $post->username = $data->username;
 $post->pageID = $data->pageID;
 $post->imageURL = $data->imageURL;
-$post->serviceID = $data->serviceID;
 
 //Create post
 if($post->create_post()){
