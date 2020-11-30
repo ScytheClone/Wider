@@ -1,4 +1,4 @@
-<?php
+,<?php
 //Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -14,7 +14,7 @@ $db = $database->connect();
 $service = new Service($db);
 
 //Get serviceID from URL
-$service->serviceTitle = isset($_GET['serviceTitle']) ? $_GET['serviceTitle'] : die();
+$service->serviceID = isset($_GET['serviceID']) ? $_GET['serviceID'] : die();
 
 //Get post
 $service->search_service();
@@ -23,17 +23,13 @@ $service->search_service();
 $service_arr = array(
     'serviceID' => $service->serviceID,
     'serviceTitle' => $service->serviceTitle,
-    'postID' => $service->postID,
-    'pText' => $service->pText,
-    'imageURL' => $service->imageURL,
-    'postTitle' => $service->postTitle,
     'pageID' => $service->pageID,
-    'username' => $service->username,
     'publish' => $service->publish,
     'serviceType' => $service->serviceType
 );
 
 //Make JSON
-print_r(json_encode($service_arr));
+var_dump($service_arr);
+//print_r(json_encode($service_arr));
 
 ?>
