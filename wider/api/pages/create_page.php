@@ -6,32 +6,28 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Comment.php';
+include_once '../../models/page.php';
 
 //Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate comment object
-$comment = new Comment($db);
+//Instantiate post object
+$page = new page($db);
 
 //Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
+$page->serviceID = $data->serviceID;
+$page->metaTag = $data->metaTag;
 
-$comment->cText = $data->cText;
-$comment->pageID = $data->pageID;
-$comment->cPublish = $data->cPublish;
-
-$comment->cPublish =  $data->cPublish;
-print_r($comment->cPublish);
-//Create comment
-if($comment->create_comment()){
+//Create post
+if($page->create_page()){
     echo json_encode(
-        array('message' => 'Comment Created')
+        array('message' => 'Page Created')
     );
 }else{
     echo json_encode(
-        array('message' => 'Comment Not Created')
+        array('message' => 'Page Not Created')
     );
 }
