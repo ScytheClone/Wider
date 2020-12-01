@@ -84,7 +84,7 @@ Class User{
             $this->lastName =htmlspecialchars(strip_tags($this->lastName));
             $this->admin =htmlspecialchars(strip_tags($this->admin));
 
-
+$this->password=password_hash($this->password, PASSWORD_DEFAULT);
             //Bind data
             $stmt->bindParam(':username', $this->username);
             $stmt->bindParam(':password', $this->password);
@@ -126,6 +126,8 @@ Class User{
                 $this->firstName =htmlspecialchars(strip_tags($this->firstName));
                 $this->middleName =htmlspecialchars(strip_tags($this->middleName));
                 $this->lastName =htmlspecialchars(strip_tags($this->lastName));
+                $this->admin =htmlspecialchars(strip_tags($this->admin));
+
                 $this->userID =htmlspecialchars(strip_tags($this->userID));
                 $this->admin =htmlspecialchars(strip_tags($this->admin));
 
@@ -137,6 +139,7 @@ Class User{
                 $stmt->bindParam(':lastName', $this->lastName);
                 $stmt->bindParam(':userID', $this->userID);
                 $stmt->bindParam(':admin', $this->admin);
+
                 //Executing query
                 if($stmt->execute()){
                     return true;
@@ -145,6 +148,39 @@ Class User{
                 //Print error
                 printf("Error: %s.\n", $stmt->error);
                 return false;
+        }
+        public function authenticateUser()
+        {
+            $array=["admin"=>FALSE, "user"=>FALSE, "notFound"=>FALSE];
+            $query=$this->conn->prepare("select username, password, admin from user where username=?");
+$query->execute([$this->username]);
+if($query->rowCount()>0)
+{
+$row=$query->fetch();
+if(password_verify($this->password, $row[1]))
+{
+if($row[2]==1)
+{
+    $array['admin']=TRUE;
+    return $array;
+}
+else
+{
+    $array["user"]=TRUE;
+return $array;
+}
+}
+else 
+{
+    $array['notFound']=TRUE;
+return $array;
+}
+}
+else
+{
+    $array["notFound"]=TRUE;
+return ;
+}
         }
     }
 
@@ -181,42 +217,5 @@ Class User{
         }
     
     }
-
-    class Auth{
-    //DB Stuff
-    private $conn;
-    private $table = 'user';
-
-    public $username;
-    public $password;
-    public $firstName;
-    public $middleName;
-    public $lastName;
-    public $userID;
-    
-        public function __construct($db) {
-            $this->conn = $db;
-        }
-    
-        public function auth($user){
-
-            $sql = 'SELECT * FROM user';
-
-            $stmt = $this->conn->prepare($sql);
-            
-            $stmt->execute();
-    
-            $rowCount = $stmt->rowCount();
-    
-            if($rowCount > 0){
-                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                    if($user == $row){
-                        return "true";
-                    }
-                }
-                return "false";
-            }
-        }
-    }    
 
 ?>
